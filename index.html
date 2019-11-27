@@ -54,6 +54,46 @@
     <textarea name="yourmessage" rows="10" cols="30"></textarea><br>
     <input type="submit" name="">
   </form>
+
+  <div id="paypal-button"></div>
+  <script src="<a class="vglnk" href="https://www.paypalobjects.com/api/checkout.js" rel="nofollow"><span>https</span><span>://</span><span>www</span><span>.</span><span>paypalobjects</span><span>.</span><span>com</span><span>/</span><span>api</span><span>/</span><span>checkout</span><span>.</span><span>js</span></a>"></script>
+  <script>
+  paypal.Button.render({
+  // Configure environment
+  env: 'sandbox',
+  client: {
+  sandbox: 'demo_sandbox_client_id',
+  production: 'demo_production_client_id'
+  },
+  // Customize button (optional)
+  locale: 'en_US',
+  style: {
+  size: 'small',
+  color: 'gold',
+  shape: 'pill',
+  },
+  // Set up a payment
+  payment: function (data, actions) {
+  return actions.payment.create({
+  transactions: [{
+  amount: {
+  total: '0.01',
+  currency: 'USD'
+  }
+  }]
+  });
+  },
+  // Execute the payment
+  onAuthorize: function (data, actions) {
+  return actions.payment.execute()
+  .then(function () {
+  // Show a confirmation message to the buyer
+  window.alert('Thank you for your purchase!');
+  });
+  }
+  }, '#paypal-button');
+  </script>
+
 </body>
 
 </html>
